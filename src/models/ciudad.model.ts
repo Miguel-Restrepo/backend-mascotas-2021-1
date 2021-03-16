@@ -1,6 +1,18 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Departamento} from './departamento.model';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    foreignKeys: {
+      fk_order_customerId: {
+        name: 'fk_order_customerId',
+        entity: 'Customer',
+        entityKey: 'id',
+        foreignKey: 'customerId',
+      },
+    },
+  },
+})
 export class Ciudad extends Entity {
   @property({
     type: 'number',
@@ -16,11 +28,8 @@ export class Ciudad extends Entity {
   })
   nombre: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @belongsTo(() => Departamento)
+  departamentoId: number;
 
   constructor(data?: Partial<Ciudad>) {
     super(data);
