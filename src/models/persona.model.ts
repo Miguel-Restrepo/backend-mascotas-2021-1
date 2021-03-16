@@ -1,14 +1,13 @@
-import {Model, model, property} from '@loopback/repository';
+import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Persona extends Model {
+export class Persona extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
@@ -34,9 +33,9 @@ export class Persona extends Model {
   direccion?: string;
 
   @property({
-    type: 'string',
+    type: 'number',
   })
-  telefono?: string;
+  telefono?: number;
 
   // Define well-known properties here
 

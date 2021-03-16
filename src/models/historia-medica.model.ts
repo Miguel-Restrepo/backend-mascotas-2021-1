@@ -1,20 +1,28 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Ciudad extends Entity {
+export class HistoriaMedica extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
-    required: true,
   })
-  nombre: string;
+  especialidad?: string;
+
+  @property({
+    type: 'string',
+  })
+  diagnostico?: string;
+
+  @property({
+    type: 'string',
+  })
+  recomendaciones?: string;
 
   // Define well-known properties here
 
@@ -22,13 +30,13 @@ export class Ciudad extends Entity {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Ciudad>) {
+  constructor(data?: Partial<HistoriaMedica>) {
     super(data);
   }
 }
 
-export interface CiudadRelations {
+export interface HistoriaMedicaRelations {
   // describe navigational properties here
 }
 
-export type CiudadWithRelations = Ciudad & CiudadRelations;
+export type HistoriaMedicaWithRelations = HistoriaMedica & HistoriaMedicaRelations;

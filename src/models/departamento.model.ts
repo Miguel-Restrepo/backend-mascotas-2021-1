@@ -1,13 +1,14 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class EstadoSolicitud extends Entity {
+export class Departamento extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: true,
+    generated: false,
+    required: true,
   })
-  id?: number;
+  id: number;
 
   @property({
     type: 'string',
@@ -16,13 +17,13 @@ export class EstadoSolicitud extends Entity {
   nombre: string;
 
 
-  constructor(data?: Partial<EstadoSolicitud>) {
+  constructor(data?: Partial<Departamento>) {
     super(data);
   }
 }
 
-export interface EstadoSolicitudRelations {
+export interface DepartamentoRelations {
   // describe navigational properties here
 }
 
-export type EstadoSolicitudWithRelations = EstadoSolicitud & EstadoSolicitudRelations;
+export type DepartamentoWithRelations = Departamento & DepartamentoRelations;

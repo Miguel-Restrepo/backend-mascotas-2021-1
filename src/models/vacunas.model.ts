@@ -1,7 +1,7 @@
-import {Model, model, property} from '@loopback/repository';
+import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: false}})
-export class Vacunas extends Model {
+@model()
+export class Vacunas extends Entity {
   @property({
     type: 'number',
     id: true,
@@ -16,11 +16,6 @@ export class Vacunas extends Model {
   })
   nombre: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
 
   constructor(data?: Partial<Vacunas>) {
     super(data);

@@ -1,20 +1,25 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Ciudad extends Entity {
+export class Usuario extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
     required: true,
   })
-  nombre: string;
+  username: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  clave: string;
 
   // Define well-known properties here
 
@@ -22,13 +27,13 @@ export class Ciudad extends Entity {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Ciudad>) {
+  constructor(data?: Partial<Usuario>) {
     super(data);
   }
 }
 
-export interface CiudadRelations {
+export interface UsuarioRelations {
   // describe navigational properties here
 }
 
-export type CiudadWithRelations = Ciudad & CiudadRelations;
+export type UsuarioWithRelations = Usuario & UsuarioRelations;
