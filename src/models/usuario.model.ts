@@ -1,31 +1,40 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Rol} from './rol.model';
 
 @model()
 export class Usuario extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  username: string;
+  nombre_usuario: string;
 
   @property({
     type: 'string',
-    required: true,
   })
-  clave: string;
+  clave?: string;
 
-  // Define well-known properties here
+  @property({
+    type: 'string',
+    required: true
+  })
+  telefono: string;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @property({
+    type: 'number',
+    required: false,
+  })
+  id_persona?: number;
+
+  @belongsTo(() => Rol)
+  rolId: string;
 
   constructor(data?: Partial<Usuario>) {
     super(data);

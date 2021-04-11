@@ -1,14 +1,14 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Raza} from './raza.model';
 
 @model()
 export class TipoMascota extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
@@ -16,11 +16,8 @@ export class TipoMascota extends Entity {
   })
   nombre: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => Raza)
+  razas: Raza[];
 
   constructor(data?: Partial<TipoMascota>) {
     super(data);

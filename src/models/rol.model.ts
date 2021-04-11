@@ -1,13 +1,14 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Usuario} from './usuario.model';
 
 @model()
 export class Rol extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -15,11 +16,8 @@ export class Rol extends Entity {
   })
   nombre: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => Usuario)
+  usuarios: Usuario[];
 
   constructor(data?: Partial<Rol>) {
     super(data);

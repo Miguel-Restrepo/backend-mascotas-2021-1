@@ -1,14 +1,26 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {Mascota} from './mascota.model';
+import {TipoMascota} from './tipo-mascota.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_tipo_mascota_id: {
+        name: 'fk_tipo_mascota_id',
+        entity: 'TipoMascota',
+        entityKey: 'id',
+        foreignKey: 'tipoMascotaId',
+      },
+    },
+  },
+})
 export class Raza extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
@@ -16,11 +28,11 @@ export class Raza extends Entity {
   })
   nombre: string;
 
-  // Define well-known properties here
+  @belongsTo(() => TipoMascota)
+  tipoMascotaId: number;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => Mascota)
+  mascotas: Mascota[];
 
   constructor(data?: Partial<Raza>) {
     super(data);

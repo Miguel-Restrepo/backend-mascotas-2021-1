@@ -1,6 +1,32 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {EstadoSolicitud} from './estado-solicitud.model';
+import {Mascota} from './mascota.model';
+import {Persona} from './persona.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_mascota_id_solicitud: {
+        name: 'fk_mascota_id_solicitud',
+        entity: 'Mascota',
+        entityKey: 'id',
+        foreignKey: 'mascotaId',
+      },
+      fk_persona_id_solicitud: {
+        name: 'fk_persona_id_solicitud',
+        entity: 'Persona',
+        entityKey: 'id',
+        foreignKey: 'personaId',
+      },
+      fk_estado_id_solicitud: {
+        name: 'fk_estado_id_solicitud',
+        entity: 'EstadoSolicitud',
+        entityKey: 'id',
+        foreignKey: 'estadoSolicitudId',
+      },
+    },
+  },
+})
 export class SolicitudAdopcion extends Entity {
   @property({
     type: 'number',
@@ -9,11 +35,14 @@ export class SolicitudAdopcion extends Entity {
   })
   id?: number;
 
-  // Define well-known properties here
+  @belongsTo(() => Mascota)
+  mascotaId: number;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @belongsTo(() => Persona)
+  personaId: number;
+
+  @belongsTo(() => EstadoSolicitud)
+  estadoSolicitudId: number;
 
   constructor(data?: Partial<SolicitudAdopcion>) {
     super(data);

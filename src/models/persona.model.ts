@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {SolicitudAdopcion} from './solicitud-adopcion.model';
 
 @model()
 export class Persona extends Entity {
@@ -22,26 +23,25 @@ export class Persona extends Entity {
   apellidos: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  documento: number;
+  documento: string;
 
   @property({
     type: 'string',
+    required: true,
   })
-  direccion?: string;
+  direccion: string;
 
   @property({
-    type: 'number',
+    type: 'string',
+    required: true,
   })
-  telefono?: number;
+  telefono: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => SolicitudAdopcion)
+  solicitudesDeAdopcion: SolicitudAdopcion[];
 
   constructor(data?: Partial<Persona>) {
     super(data);

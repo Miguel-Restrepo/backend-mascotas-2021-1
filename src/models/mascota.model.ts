@@ -1,6 +1,29 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
+import {Ciudad} from './ciudad.model';
+import {HistoriaMedica} from './historia-medica.model';
+import {Raza} from './raza.model';
+import {SolicitudAdopcion} from './solicitud-adopcion.model';
+import {VacunaMascota} from './vacuna-mascota.model';
+import {Vacuna} from './vacunas.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_raza_id_mascota: {
+        name: 'fk_raza_id_mascota',
+        entity: 'Raza',
+        entityKey: 'id',
+        foreignKey: 'razaId',
+      },
+      fk_ciudad_id_mascota: {
+        name: 'fk_ciudad_id_mascota',
+        entity: 'Ciudad',
+        entityKey: 'id',
+        foreignKey: 'ciudadId',
+      },
+    },
+  },
+})
 export class Mascota extends Entity {
   @property({
     type: 'number',
@@ -10,10 +33,10 @@ export class Mascota extends Entity {
   id?: number;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  identificador: number;
+  identificador: string;
 
   @property({
     type: 'string',
@@ -23,24 +46,36 @@ export class Mascota extends Entity {
 
   @property({
     type: 'date',
+    required: true
   })
-  fecha_nacimiento?: string;
+  fecha_nacimiento: string;
 
   @property({
     type: 'string',
+    required: true,
   })
-  descripcion?: string;
+  descripcion: string;
 
   @property({
     type: 'string',
+    required: false,
   })
-  imagen?: string;
+  imagen: string;
 
-  // Define well-known properties here
+  @belongsTo(() => Raza)
+  razaId: number;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => HistoriaMedica)
+  historiasMedicas: HistoriaMedica[];
+
+  @belongsTo(() => Ciudad)
+  ciudadId: number;
+
+  @hasMany(() => SolicitudAdopcion)
+  solicitudesDeAdopcion: SolicitudAdopcion[];
+
+  @hasMany(() => Vacuna, {through: {model: () => VacunaMascota}})
+  vacunas: Vacuna[];
 
   constructor(data?: Partial<Mascota>) {
     super(data);

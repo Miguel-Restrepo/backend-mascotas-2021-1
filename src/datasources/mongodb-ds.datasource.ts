@@ -18,13 +18,13 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class MongodbDsDataSource extends juggler.DataSource
+export class MongodbdsDataSource extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'mongodbDs';
+  static dataSourceName = 'mongodbds';
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.mongodbDs', {optional: true})
+    @inject('datasources.config.mongodbds', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);
